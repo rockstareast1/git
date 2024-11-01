@@ -219,6 +219,9 @@ This can also be set up as the default behaviour by using the
 --[no-]relative-paths::
 	Overrides the `worktree.useRelativePaths` config option, see
 	linkgit:git-config[1].
++
+With `repair`, the linking files will be updated if there's an absolute/relative
+mismatch, even if the links are correct.
 
 --[no-]track::
 	When creating a new branch, if `<commit-ish>` is a branch,
