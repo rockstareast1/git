@@ -678,7 +678,7 @@ int send_pack(struct send_pack_args *args,
 		}
 	}
 
-	if (use_push_options) {
+	if (use_push_options && !args->dry_run) {
 		struct string_list_item *item;
 
 		packet_buf_flush(&req_buf);
