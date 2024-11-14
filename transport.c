@@ -920,10 +920,10 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
 	close(data->fd[0]);
 	/*
 	 * Atomic push may abort the connection early and close the pipe,
-	 * which may cause an error for `finish_connect()`. Ignore this error
-	 * for atomic git-push.
+	 * which may cause an error for `finish_connect()`. We can ignore
+	 * this error when both `--atomic` and `--dry-run` flags provided.
 	 */
-	if (ret || args.atomic)
+	if (ret || (args.atomic && args.dry_run))
 		finish_connect(data->conn);
 	else
 		ret = finish_connect(data->conn);
