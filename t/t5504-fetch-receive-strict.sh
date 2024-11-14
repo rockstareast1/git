@@ -68,7 +68,6 @@ test_expect_success 'fetch with transfer.fsckobjects' '
 cat >exp <<EOF
 To dst
 !	refs/heads/main:refs/heads/test	[remote rejected] (missing necessary objects)
-Done
 EOF
 
 test_expect_success 'push without strict' '

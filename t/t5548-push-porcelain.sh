@@ -110,7 +110,7 @@ run_git_push_porcelain_output_test() {
 	# Refs of workbench: main(A)                  baz(A)  next(A)
 	# git-push         : main(A)  NULL    (B)     baz(A)  next(A)
 	test_expect_success "git-push --porcelain --dry-run ($PROTOCOL)" '
-		test_must_fail git -C workbench push --porcelain --dry-run origin \
+		git -C workbench push --porcelain --dry-run origin \
 			main \
 			:refs/heads/foo \
 			$B:bar \
@@ -176,7 +176,7 @@ run_git_push_porcelain_output_test() {
 	# Refs of workbench: main(A)                  baz(A)  next(A)
 	# git-push         : main(A)  NULL    (B)     baz(A)  next(A)
 	test_expect_success "git-push --porcelain --dry-run --atomic ($PROTOCOL)" '
-		test_must_fail git -C workbench push --porcelain --dry-run --atomic origin \
+		git -C workbench push --porcelain --dry-run --atomic origin \
 			main \
 			:refs/heads/foo \
 			$B:bar \
@@ -257,7 +257,6 @@ run_git_push_porcelain_output_test() {
 		> -	:refs/heads/foo	[deleted]
 		> *	refs/heads/next:refs/heads/next	[new branch]
 		> !	refs/heads/main:refs/heads/main	[rejected] (non-fast-forward)
-		> Done
 		EOF
 		test_cmp expect actual &&
 
@@ -325,7 +324,6 @@ run_git_push_porcelain_output_test() {
 		> !	(delete):refs/heads/foo	[rejected] (atomic push failed)
 		> !	refs/heads/main:refs/heads/main	[rejected] (non-fast-forward)
 		> !	refs/heads/next:refs/heads/next	[rejected] (atomic push failed)
-		> Done
 		EOF
 		test_cmp expect actual &&
 
@@ -396,7 +394,6 @@ run_git_push_porcelain_output_test() {
 		> !	:refs/heads/foo	[remote rejected] (pre-receive hook declined)
 		> !	refs/heads/main:refs/heads/main	[remote rejected] (pre-receive hook declined)
 		> !	refs/heads/next:refs/heads/next	[remote rejected] (pre-receive hook declined)
-		> Done
 		EOF
 		test_cmp expect actual &&
 
