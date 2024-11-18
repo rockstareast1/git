@@ -83,6 +83,12 @@ int refs_read_ref_full(struct ref_store *refs, const char *refname,
 
 int refs_read_ref(struct ref_store *refs, const char *refname, struct object_id *oid);
 
+/*
+ * Return 0 if the symbolic reference could be read without error.
+ * Return -1 for generic errors.
+ * Return -2 if the reference was actually non-symbolic.
+ */
+
 int refs_read_symbolic_ref(struct ref_store *ref_store, const char *refname,
 			   struct strbuf *referent);
 

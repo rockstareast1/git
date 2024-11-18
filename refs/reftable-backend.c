@@ -830,7 +830,9 @@ static int reftable_be_read_symbolic_ref(struct ref_store *ref_store,
 		return ret;
 
 	ret = reftable_stack_read_ref(stack, refname, &ref);
-	if (ret == 0 && ref.value_type == REFTABLE_REF_SYMREF)
+	if (!ret && (ref.value_type != REFTABLE_REF_SYMREF))
+		ret = -2;
+	else if (!ret && (ref.value_type == REFTABLE_REF_SYMREF))
 		strbuf_addstr(referent, ref.value.symref);
 	else
 		ret = -1;
