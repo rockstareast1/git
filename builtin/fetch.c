@@ -1607,7 +1607,7 @@ static const char *strip_refshead(const char *name){
 
 static int set_head(const struct ref *remote_refs)
 {
-	int result = 0, updateres;
+	int result = 0, updateres, is_bare;
 	struct strbuf b_head = STRBUF_INIT, b_remote_head = STRBUF_INIT,
 		b_local_head = STRBUF_INIT;
 	const char *remote = gtransport->remote->name;
@@ -1640,15 +1640,21 @@ static int set_head(const struct ref *remote_refs)
 
 	if (!head_name)
 		goto cleanup;
-	strbuf_addf(&b_head, "refs/remotes/%s/HEAD", remote);
-	strbuf_addf(&b_remote_head, "refs/remotes/%s/%s", remote, head_name);
+	is_bare = is_bare_repository();
+	if (is_bare) {
+		strbuf_addstr(&b_head, "HEAD");
+		strbuf_addf(&b_remote_head, "refs/heads/%s", head_name);
+	} else {
+		strbuf_addf(&b_head, "refs/remotes/%s/HEAD", remote);
+		strbuf_addf(&b_remote_head, "refs/remotes/%s/%s", remote, head_name);
+	}
 		/* make sure it's valid */
-	if (!refs_ref_exists(refs, b_remote_head.buf)) {
+	if (!is_bare && !refs_ref_exists(refs, b_remote_head.buf)) {
 		result = 1;
 		goto cleanup;
 	}
 	updateres = refs_update_symref_extended(refs, b_head.buf, b_remote_head.buf,
-					"fetch", &b_local_head, 1);
+					"fetch", &b_local_head, !is_bare);
 	if (updateres == -1) {
 		result = 1;
 		goto cleanup;
