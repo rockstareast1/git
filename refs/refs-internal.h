@@ -674,6 +674,12 @@ struct ref_storage_be {
 
 	ref_iterator_begin_fn *iterator_begin;
 	read_raw_ref_fn *read_raw_ref;
+
+	/*
+	 * Return 0 if the symbolic reference could be read without error.
+	 * Return -1 for generic errors.
+	 * Return -2 if the reference was actually non-symbolic.
+	 */
 	read_symbolic_ref_fn *read_symbolic_ref;
 
 	reflog_iterator_begin_fn *reflog_iterator_begin;
