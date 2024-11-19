@@ -1637,7 +1637,7 @@ static int set_head(const struct ref *remote_refs)
 
 	if (!head_name)
 		goto cleanup;
-	is_bare = is_bare_repository();
+	is_bare = repo_is_bare(the_repository);
 	if (is_bare) {
 		strbuf_addstr(&b_head, "HEAD");
 		strbuf_addf(&b_remote_head, "refs/heads/%s", head_name);
