@@ -1648,7 +1648,7 @@ static int update_branch(struct branch *b)
 		}
 	}
 	transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
-						  &err);
+						  0, &err);
 	if (!transaction ||
 	    ref_transaction_update(transaction, b->name, &b->oid, &old_oid,
 				   NULL, NULL, 0, msg, &err) ||
@@ -1683,7 +1683,7 @@ static void dump_tags(void)
 	struct ref_transaction *transaction;
 
 	transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
-						  &err);
+						  0, &err);
 	if (!transaction) {
 		failure |= error("%s", err.buf);
 		goto cleanup;
